@@ -1,0 +1,23 @@
+{% for article in msg %}
+<tr>
+    <td><input type="checkbox"></td>
+    <td>{{article.id}}</td>
+    <td><a href="/a/{{article.id}}">{{article.title}}</a></td>
+    <td>
+        {% for item in article.item %}
+            {{item.name}}
+        {% endfor %}
+    </td>
+    <td class="am-hide-sm-only">{{article.user.name}}</td>
+    <td class="am-hide-sm-only">{{article.createTime}}</td>
+    <td>
+        <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
+                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+            </div>
+        </div>
+    </td>
+</tr>
+{% endfor %}

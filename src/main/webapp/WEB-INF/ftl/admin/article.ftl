@@ -19,12 +19,9 @@
     <link rel="stylesheet" href="/static/assets/css/app.css">
     <script src="/static/assets/js/jquery.min.js"></script>
     <script src="/static/assets/js/echarts.min.js"></script>
+    <script src="/static/assets/js/nunjuck.js"></script>
+    <script src="/static/assets/js/common.js"></script>
 
-    <script type="text/javascript" charset="utf-8" src="/static/utf8-jsp/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/static/utf8-jsp/ueditor.all.min.js"> </script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="/static/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
     <style>
         #page .layui-laypage input {
             display: inline-block;
@@ -120,7 +117,7 @@
                                             <th class="table-set">操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="article-tr">
                                         <#list articleList as article>
                                             <tr>
                                                 <td><input type="checkbox"></td>
@@ -165,37 +162,6 @@
     <script src="/static/dp/WdatePicker.js"></script>
     <script src="/static/js/ajax.js"></script>
      <script>
-         //实例化编辑器
-         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-         var ue = UE.getEditor('editor');
-         $(function () {
-             $("#publish").click(function () {
-                 getdataAjax({
-                     methods:"POST",
-                     url:"/admin/publish/article",
-                     params:{
-                         title:$("#article-title").val(),
-                         item:$("#article-item").val(),
-                         tag:$("#article-tag").val(),
-                         createTime:$("#article-publishTime").val(),
-                         level:$("#article-level").val(),
-                         content:ue.getContent()
-                     },
-                     context:this,
-                     success:function(param,res) {
-                         if(res.success == "true"){
-                             window.location.href ="/admin/article"
-                         }else{
-                             //处理登录错误
-                         }
-                     },
-                     done:function () {
-                         alert();
-                     }
-
-                 })
-             })
-         })
          layui.use(['laypage', 'layer'], function(){
              var laypage = layui.laypage
                      ,layer = layui.layer;
@@ -214,10 +180,16 @@
                              context:this,
                              success:function(param,res) {
                                  var data = res.data;
-                                 var html = "";
-                                 for(var i = 0; i < data.length; i++){
-
-                                 }
+                                 common.getTmp({
+                                     html:"article1.html",
+                                     data:{
+                                         msg:data
+                                     },
+                                     callback:function(err,res){
+                                         console.log(res);
+                                         $("#article-tr").html(res);
+                                     }
+                                 });
                              }
                          })
                      }
