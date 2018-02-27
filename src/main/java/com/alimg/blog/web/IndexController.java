@@ -22,11 +22,11 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     private String list(HttpServletRequest req,Model model) {
-        List<Article> list = articleService.getList();
-        System.out.println(list.size());
+        List<Article> list = articleService.getList(0,8);
+
         List<Item> items = itemService.getList();
         User user = (User)req.getSession().getAttribute("user");
-        System.out.println(user);
+
         model.addAttribute("itemList", items);
         model.addAttribute("articleList", list);
         return "index";

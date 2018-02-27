@@ -14,6 +14,7 @@
     <link rel="apple-touch-icon-precomposed" href="/static/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
     <link rel="stylesheet" href="/static/assets/css/admin.css">
     <link rel="stylesheet" href="/static/assets/css/app.css">
     <script src="/static/assets/js/jquery.min.js"></script>
@@ -24,6 +25,15 @@
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="/static/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+    <style>
+        #page .layui-laypage input {
+            display: inline-block;
+            width: 40px;
+            margin: 0 10px;
+            padding: 0 3px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body data-type="index">
@@ -137,7 +147,7 @@
                                         </tbody>
                                     </table>
                                     <div class="am-cf">
-
+                                        <div id="page"></div>
                                     </div>
                                     <hr>
 
@@ -150,6 +160,7 @@
                 </div>
             </div>
         </div>
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
     <script src="/static/assets/js/amazeui.min.js"></script>
     <script src="/static/dp/WdatePicker.js"></script>
     <script src="/static/js/ajax.js"></script>
@@ -185,6 +196,36 @@
                  })
              })
          })
+         layui.use(['laypage', 'layer'], function(){
+             var laypage = layui.laypage
+                     ,layer = layui.layer;
+
+             //调用分页
+             laypage.render({
+                 elem: 'page'
+                 ,count: ${articleCount}
+                 //,layout: ['count', 'prev', 'next', 'skip']
+                 ,limit:8
+                 ,jump: function(obj,first){
+                     if(!first){
+                         getdataAjax({
+                             methods:"POST",
+                             url:"/admin/page/article/" + obj.curr,
+                             context:this,
+                             success:function(param,res) {
+                                 var data = res.data;
+                                 var html = "";
+                                 for(var i = 0; i < data.length; i++){
+
+                                 }
+                             }
+                         })
+                     }
+                 }
+             });
+
+         });
+
     </script>
 </body>
 

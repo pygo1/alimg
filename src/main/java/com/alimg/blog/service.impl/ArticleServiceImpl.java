@@ -23,10 +23,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TagDao tagDao;
 
-    public List<Article> getList() {
+    public List<Article> getList(Integer offset, int limit) {
         List<Article> articles;
-        articles = articleDao.queryAll(0,8);
+        articles = articleDao.queryAll(offset,limit);
         return articles;
+    }
+
+    public int getArticleCount() {
+        int count = articleDao.selectArticleCount();
+        return count;
     }
 
     @Transactional

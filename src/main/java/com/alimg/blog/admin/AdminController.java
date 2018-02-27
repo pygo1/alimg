@@ -14,10 +14,7 @@ import com.alimg.blog.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,15 +45,35 @@ public class AdminController extends BaseController {
         model.addAttribute("itemList", items);
         return "admin/postArticle";
     }
+
     @RequestMapping(value = "/article", method = RequestMethod.GET)
     private String article(Model model) {
-        List<Article> articleList = articleService.getList();
+        List<Article> articleList = articleService.getList(0,8);
         System.out.println(articleList);
+        int articleCount = articleService.getArticleCount();
+
         List<Item> items = itemService.getList();
         model.addAttribute("itemList", items);
+        model.addAttribute("articleCount", articleCount);
         model.addAttribute("articleList", articleList);
         return "admin/article";
     }
+    @RequestMapping(value = "/page/article/{page}", method = RequestMethod.POST,produces = {
+            "application/json; charset=utf-8" })
+    @ResponseBody
+    private Result<List<Article>> pageArticle(@PathVariable("page") Integer page){
+        if (page == null) {
+            return new Result<List<Article>>(false,"参数错误");
+        }
+        try {
+            List<Article> articleList = articleService.getList(8*(page-1),8);
+            System.out.println(articleList);
+            return new Result<List<Article>>(true,articleList);
+        }catch (Exception e){
+            return new Result<List<Article>>(false,"查询异常");
+        }
+    }
+
 
     @RequestMapping(value = "/publish/article", method = RequestMethod.POST,produces = {
             "application/json; charset=utf-8" })

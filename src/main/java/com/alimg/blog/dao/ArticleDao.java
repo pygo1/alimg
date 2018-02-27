@@ -15,5 +15,7 @@ public interface ArticleDao {
      */
     List<Article> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 
+    int selectArticleCount();
+
     int insertArticle(@Param("article") Article article);
 }
