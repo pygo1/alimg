@@ -14,5 +14,9 @@ public interface ItemDao {
      */
     List<Item>  getAllItem();
 
-    void  insertHasItem(@Param("article_id") int articleId, @Param("item_id") int item_id);
+    void  insertHasItem(@Param("article_id") int articleId, @Param("item_id") String[] item_id);
+
+    void  modifyHasItem(@Param("article_id") int articleId, @Param("item_id") String[] item_id);
+
+    void  deleteItem(@Param("article_id") int articleId);
 }

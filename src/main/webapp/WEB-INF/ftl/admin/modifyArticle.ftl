@@ -83,7 +83,8 @@
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">标题 / Name</label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" id="article-title" placeholder="标题 / Name">
+                                            <input value="${article.id}" type="hidden" id="article-id">
+                                            <input value="${article.title}" type="text" id="article-title" placeholder="标题 / Name">
                                         </div>
                                     </div>
 
@@ -93,13 +94,13 @@
                                             <select multiple data-am-selected="{btnSize: 'sm',btnWidth:'100%'}" id="article-item">
                                                 <#list itemList as list>
                                                     <option value="${list.id}">${list.name}</option>
-                                                        <#if list.children >
-                                                            <#list list.children as child>
-                                                                <option value="${child.id}">${child.name}</option>
-                                                            </#list>
-                                                        </#if>
-                                                    </li>
+                                                    <#if list.children >
+                                                        <#list list.children as child>
+                                                            <option value="${child.id}">${child.name}</option>
+                                                        </#list>
+                                                    </#if>
                                                 </#list>
+
                                             </select>
                                         </div>
                                     </div>
@@ -107,21 +108,21 @@
                                     <div class="am-form-group">
                                         <label for="user-phone" class="am-u-sm-3 am-form-label">标签 / Tag</label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" id="article-tag" placeholder="标签 / Tag[Tag1,Tag2,Tag3]">
+                                            <input value="<#list article.tag as tag><#if tag_index == 0>${tag.name}<#else >,${tag.name}</#if></#list>" type="text" id="article-tag" placeholder="标签 / Tag[Tag1,Tag2,Tag3]">
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <label for="user-QQ" class="am-u-sm-3 am-form-label">发布时间</label>
                                         <div class="am-u-sm-9">
-                                            <input type="text"id ="article-publishTime" onClick="WdatePicker({position:{left:0,top:-70},el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" placeholder="发布时间">
+                                            <input value="${article.createTime?string('yyyy-MM-dd hh:mm:ss')}" type="text"id ="article-publishTime" onClick="WdatePicker({position:{left:0,top:-70},el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" placeholder="发布时间">
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <label for="user-weibo" class="am-u-sm-3 am-form-label">等级 / Level</label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" id="article-level" placeholder="等级 / Level[0,1,2,3... 高~低]">
+                                            <input value="${article.level}" type="text" id="article-level" placeholder="等级 / Level[0,1,2,3... 高~低]">
                                         </div>
                                     </div>
                                 </form>
@@ -130,7 +131,10 @@
                     </div>
 
                 </div>
-                <script id="editor" type="text/plain" style="width:100%;height:500px;"/>
+                <div style="width:100%; margin:auto">
+                    <textarea style="width:100%;height:500px;" id="editor">${article.content}</textarea>
+                </div>
+                <#--<script id="editor" type="text/plain" style="width:100%;"/>-->
             </div>
         </div>
         <script src="/static/layui/layui.js" charset="utf-8"></script>
@@ -138,6 +142,13 @@
         <script src="/static/dp/WdatePicker.js"></script>
         <script src="/static/js/ajax.js"></script>
      <script>
+         var item = [];
+         <#list article.item as article_item>
+            item.push(JSON.parse('{"id":"${article_item.id}","name":"${article_item.name}"}'));
+         </#list>
+         for(var i = 0;i<item.length;i++){
+             $("#article-item option[value="+item[i]["id"]+"]").prop("selected","selected");
+         }
          //实例化编辑器
          //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
          var ue = UE.getEditor('editor');
@@ -145,15 +156,15 @@
              $("#publish").click(function () {
                  getdataAjax({
                      methods:"POST",
-                     url:"/admin/publish/article",
+                     url:"/admin/article/modify/" + $("#article-id").val(),
                      params:{
                          data:JSON.stringify({
-                             title:$("#article-title").val(),
-                             item:$("#article-item").val(),
-                             tag:$("#article-tag").val(),
-                             createTime:$("#article-publishTime").val(),
-                             level:$("#article-level").val(),
-                             content:ue.getContent()
+                             title: $("#article-title").val(),
+                             item: $("#article-item").val(),
+                             tag: $("#article-tag").val(),
+                             createTime: $("#article-publishTime").val(),
+                             level: $("#article-level").val(),
+                             content: ue.getContent()
                          })
                      },
                      context:this,
@@ -164,7 +175,6 @@
                              //处理登录错误
                          }
                      }
-
                  })
              })
          })

@@ -78,7 +78,7 @@
                         <div class="am-g">
                             <div class="am-u-sm-12 am-u-md-3">
                                 <div class="am-form-group">
-                                    <select data-am-selected="{btnSize: 'sm'}">
+                                    <select id="itemList" data-am-selected="{btnSize: 'sm'}">
                                         <option value="0">所有类别</option>
                                         <#list itemList as list>
                                             <option value="${list.id}">${list.name}</option>
@@ -132,10 +132,10 @@
                                                 <td class="am-hide-sm-only">${article.createTime?string('yyyy-MM-dd hh:mm:ss')}</td>
                                                 <td>
                                                     <div class="am-btn-toolbar">
-                                                        <div class="am-btn-group am-btn-group-xs">
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                            <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                                        <div article_id="${article.id}" class="am-btn-group am-btn-group-xs">
+                                                            <button type="button" class="am-btn am-btn-default am-btn-xs editor-article"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                                                            <button type="button" class="am-btn am-btn-default am-btn-xs copy-article"><span class="am-icon-copy"></span> 复制</button>
+                                                            <button type="button" class="am-btn am-btn-default am-btn-xs delete-article"><span class="am-icon-trash-o"></span> 删除</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -167,34 +167,76 @@
                      ,layer = layui.layer;
 
              //调用分页
-             laypage.render({
-                 elem: 'page'
-                 ,count: ${articleCount}
-                 //,layout: ['count', 'prev', 'next', 'skip']
-                 ,limit:8
-                 ,jump: function(obj,first){
-                     if(!first){
-                         getdataAjax({
-                             methods:"POST",
-                             url:"/admin/page/article/" + obj.curr,
-                             context:this,
-                             success:function(param,res) {
-                                 var data = res.data;
-                                 common.getTmp({
-                                     html:"article1.html",
-                                     data:{
-                                         msg:data
-                                     },
-                                     callback:function(err,res){
-                                         console.log(res);
-                                         $("#article-tr").html(res);
-                                     }
-                                 });
-                             }
-                         })
+             paging(${articleCount});
+             function paging(count) {
+                 laypage.render({
+                     elem: 'page'
+                     ,count:count
+                     //,layout: ['count', 'prev', 'next', 'skip']
+                     ,limit:8
+                     ,jump: function(obj,first){
+                         if(!first){
+                             getdataAjax({
+                                 methods:"POST",
+                                 url:"/admin/page/article/" + obj.curr + "?item="+$("#itemList").val(),
+                                 context:this,
+                                 success:function(param,res) {
+                                     var data = res.data;
+                                     common.getTmp({
+                                         html:"article1.html",
+                                         data:{
+                                             msg:data
+                                         },
+                                         callback:function(err,res){
+                                             $("#article-tr").html(res);
+                                         }
+                                     });
+                                 }
+                             })
+                         }
                      }
-                 }
-             });
+                 });
+             }
+
+             $("#itemList").on("change",function () {
+                 var item = $(this).val();
+                 getdataAjax({
+                     methods:"POST",
+                     url:"/admin/page/article/1?item="+item,
+                     context:this,
+                     success:function(param,res) {
+                         var data = res.data;
+                         common.getTmp({
+                             html:"article1.html",
+                             data:{
+                                 msg:data
+                             },
+                             callback:function(err,res){
+                                 $("#article-tr").html(res);
+                             }
+                         });
+                     }
+                 })
+                 getdataAjax({
+                     methods:"POST",
+                     url:"/admin/page/article/count/"+item,
+                     context:this,
+                     success:function(param,res) {
+                         var data = res.data;
+                         paging(data);
+                     }
+                 })
+             })
+             $("body").on("click",".editor-article",function(){
+                 var id = $(this).parent().attr("article_id");
+                 window.location.href = "/admin/article/modify/" + id;
+             })
+             $("body").on("click",".copy-article",function(){
+                    layer.msg("aaa")
+             })
+             $("body").on("click",".delete-article",function(){
+
+             })
 
          });
 

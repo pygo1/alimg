@@ -10,9 +10,13 @@ public interface ArticleService {
      *
      * @return
      */
-    List<Article> getList(Integer offset, int limit);
+    List<Article> getList(Integer offset, int limit,int item );
 
-    int getArticleCount();
+    Article getArticle(Integer id);
 
-    Article publishArticle(Article article,int item,String[] tags);
+    int getArticleCount(int item);
+
+    Article publishArticle(Article article,String[] item,String[] tags);
+
+    Article modifyArticle(Article article,String[] item,String[] tags);
 }

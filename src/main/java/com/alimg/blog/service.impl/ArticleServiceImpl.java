@@ -23,19 +23,24 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TagDao tagDao;
 
-    public List<Article> getList(Integer offset, int limit) {
+    public List<Article> getList(Integer offset, int limit,int item) {
         List<Article> articles;
-        articles = articleDao.queryAll(offset,limit);
+        articles = articleDao.queryAll(offset,limit,item);
         return articles;
     }
 
-    public int getArticleCount() {
-        int count = articleDao.selectArticleCount();
+    public Article getArticle(Integer id) {
+        Article article = articleDao.selectArticle(id);
+        return article;
+    }
+
+    public int getArticleCount(int item) {
+        int count = articleDao.selectArticleCount(item);
         return count;
     }
 
     @Transactional
-    public Article publishArticle(Article article,int item,String[] tags) {
+    public Article publishArticle(Article article,String[] item,String[] tags) {
         try {
             articleDao.insertArticle(article);
             int articleId = article.getId();
@@ -43,6 +48,22 @@ public class ArticleServiceImpl implements ArticleService {
             itemDao.insertHasItem(articleId,item);
 
             tagDao.insertTag(articleId,tags);
+            return article;
+        }catch (Exception e){
+            throw new NoUserException(e.getMessage());
+        }
+    }
+    @Transactional
+    public Article modifyArticle(Article article, String[] item, String[] tags) {
+        try {
+            articleDao.modifyArticle(article);
+            int articleId = article.getId();
+
+            itemDao.deleteItem(articleId);
+            itemDao.modifyHasItem(articleId,item);
+
+            tagDao.deleteTag(articleId);
+            tagDao.modifyTag(articleId,tags);
             return article;
         }catch (Exception e){
             throw new NoUserException(e.getMessage());

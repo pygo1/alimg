@@ -12,6 +12,8 @@
 
             data: opts.params,
 
+            traditional: true,
+
             success: function(response) {
 
                 var data = response;

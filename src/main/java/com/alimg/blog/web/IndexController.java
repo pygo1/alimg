@@ -22,7 +22,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     private String list(HttpServletRequest req,Model model) {
-        List<Article> list = articleService.getList(0,8);
+        List<Article> list = articleService.getList(0,8,0);
 
         List<Item> items = itemService.getList();
         User user = (User)req.getSession().getAttribute("user");

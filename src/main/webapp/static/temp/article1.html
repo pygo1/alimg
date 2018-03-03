@@ -12,10 +12,10 @@
     <td class="am-hide-sm-only">{{article.createTime}}</td>
     <td>
         <div class="am-btn-toolbar">
-            <div class="am-btn-group am-btn-group-xs">
-                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
-                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+            <div article_id="{{article.id}}" class="am-btn-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary editor-article"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                <button type="button" class="am-btn am-btn-default am-btn-xs am-hide-sm-only copy-article"><span class="am-icon-copy"></span> 复制</button>
+                <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only delete-article"><span class="am-icon-trash-o"></span> 删除</button>
             </div>
         </div>
     </td>

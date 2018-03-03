@@ -18,8 +18,20 @@
         SELECT * FROM item WHERE pid = 0
     </select>
 
-    <insert id="insertHasItem">
+    <sql id="insert">
         INSERT INTO article_has_item(article_id,item_id)
-        VALUES (#{article_id},#{item_id})
+        VALUES
+        <foreach collection="item_id" item="id" separator=",">
+            (#{article_id},#{id})
+        </foreach>
+    </sql>
+    <insert id="insertHasItem">
+        <include refid="insert"/>
     </insert>
+    <delete id="deleteItem">
+        DELETE FROM article_has_item WHERE article_id = #{article_id}
+    </delete>
+    <update id="modifyHasItem">
+        <include refid="insert"/>
+    </update>
 </mapper>
