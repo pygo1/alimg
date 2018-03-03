@@ -23,9 +23,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private TagDao tagDao;
 
-    public List<Article> getList(Integer offset, int limit,int item) {
+    public List<Article> getList(Integer offset, int limit,int item,String search) {
         List<Article> articles;
-        articles = articleDao.queryAll(offset,limit,item);
+        articles = articleDao.queryAll(offset,limit,item,search);
         return articles;
     }
 
@@ -34,8 +34,8 @@ public class ArticleServiceImpl implements ArticleService {
         return article;
     }
 
-    public int getArticleCount(int item) {
-        int count = articleDao.selectArticleCount(item);
+    public int getArticleCount(int item,String search) {
+        int count = articleDao.selectArticleCount(item,search);
         return count;
     }
 
@@ -65,6 +65,21 @@ public class ArticleServiceImpl implements ArticleService {
             tagDao.deleteTag(articleId);
             tagDao.modifyTag(articleId,tags);
             return article;
+        }catch (Exception e){
+            throw new NoUserException(e.getMessage());
+        }
+    }
+    @Transactional
+    public void deleteArticle(int id) {
+        try {
+
+
+            itemDao.deleteItem(id);
+
+            tagDao.deleteTag(id);
+
+            articleDao.deleteArticle(id);
+
         }catch (Exception e){
             throw new NoUserException(e.getMessage());
         }

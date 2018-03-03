@@ -52,6 +52,11 @@
         WHERE
         id = #{article.id}
     </update>
+
+    <delete id="deleteArticle">
+        DELETE FROM article WHERE id = #{id}
+    </delete>
+
     <select id="selectArticle" resultMap="ArticleMapper">
         SELECT
         a.id articleId,
@@ -90,9 +95,16 @@
     <select id="selectArticleCount" resultType="java.lang.Integer">
         <if test="item == 0">
             SELECT COUNT(id) FROM article
+            <if test="search != '' ">
+                WHERE article.title LIKE '%' #{search} '%'
+            </if>
         </if>
         <if test="item != 0">
-            SELECT  count(m.article_id) FROM (SELECT article_id FROM article_has_item WHERE item_id = #{item}) AS m
+            SELECT  count(m.article_id) FROM (SELECT article_id FROM article_has_item WHERE item_id = #{item}
+            <if test="search != '' ">
+                AND article.title LIKE '%' #{search} '%'
+            </if>
+            ) AS m
         </if>
     </select>
     <select id="queryAll" resultMap="ArticleMapper">
@@ -131,7 +143,10 @@
         a.id in (SELECT t.id FROM (SELECT temp.id FROM article temp
         WHERE 1=1
         <if test="item != 0">
-        AND temp.id in(SELECT  m.article_id FROM (SELECT article_id FROM article_has_item WHERE item_id = #{item}) AS m)
+          AND temp.id in(SELECT  m.article_id FROM (SELECT article_id FROM article_has_item WHERE item_id = #{item}) AS m)
+        </if>
+        <if test="search != '' ">
+          AND temp.title LIKE '%' #{search} '%'
         </if>
         LIMIT ${offset}, ${limit}) AS t)
         ORDER BY

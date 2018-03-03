@@ -3,6 +3,7 @@ package com.alimg.blog.admin;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alimg.blog.dto.DeleteExecution;
 import com.alimg.blog.dto.Result;
 import com.alimg.blog.dto.LoginExecution;
 import com.alimg.blog.entity.Article;
@@ -52,9 +53,9 @@ public class AdminController extends BaseController {
 
     @RequestMapping(value = "/article", method = RequestMethod.GET)
     private String article(Model model) {
-        List<Article> articleList = articleService.getList(0,8,0);
+        List<Article> articleList = articleService.getList(0,8,0,"");
         System.out.println(articleList);
-        int articleCount = articleService.getArticleCount(0);
+        int articleCount = articleService.getArticleCount(0,"");
 
         List<Item> items = itemService.getList();
         model.addAttribute("itemList", items);
@@ -76,12 +77,12 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/page/article/count/{item}", method = RequestMethod.POST,produces = {
             "application/json; charset=utf-8" })
     @ResponseBody
-    private Result<Integer> countArticle(@PathVariable("item") Integer item){
+    private Result<Integer> countArticle(@PathVariable("item") Integer item,@RequestParam("search") String search){
         if(item == null){
             return new Result<Integer>(false,"参数错误");
         }
         try{
-            int articleCount = articleService.getArticleCount(item);
+            int articleCount = articleService.getArticleCount(item,search);
             return new Result<Integer>(true,articleCount);
         }catch (Exception e){
             return new Result<Integer>(false,"查询异常");
@@ -91,12 +92,13 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/page/article/{page}", method = RequestMethod.POST,produces = {
             "application/json; charset=utf-8" })
     @ResponseBody
-    private Result<List<Article>> pageArticle(@PathVariable("page") Integer page,@RequestParam("item") int item){
+    private Result<List<Article>> pageArticle(@PathVariable("page") Integer page,@RequestParam("item") int item,@RequestParam("search") String search){
+
         if (page == null) {
             return new Result<List<Article>>(false,"参数错误");
         }
         try {
-            List<Article> articleList = articleService.getList(8*(page-1),8,item);
+            List<Article> articleList = articleService.getList(8*(page-1),8,item,search);
             return new Result<List<Article>>(true,articleList);
         }catch (Exception e){
             return new Result<List<Article>>(false,"查询异常");
@@ -181,6 +183,22 @@ public class AdminController extends BaseController {
             return new Result<Article>(true,article);
         }catch (Exception e){
             return new Result<Article>(false,"发布文章出错！");
+        }
+    }
+
+    @RequestMapping(value = "/article/delete/{id}", method = RequestMethod.POST,produces = {
+            "application/json; charset=utf-8" })
+    @ResponseBody
+    private Result<DeleteExecution> deleteArticle(@PathVariable("id") int id){
+        try {
+
+            articleService.deleteArticle(id);
+            DeleteExecution deleteExecution = new DeleteExecution();
+            deleteExecution.setState(1);
+            deleteExecution.setStateInfo("删除成功！");
+            return new Result<DeleteExecution>(true,deleteExecution);
+        }catch (Exception e){
+            return new Result<DeleteExecution>(false,"删除文章出错！");
         }
     }
 

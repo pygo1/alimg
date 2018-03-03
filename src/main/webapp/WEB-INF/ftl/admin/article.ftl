@@ -1,37 +1,14 @@
-<!doctype html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Amaze UI Admin index Examples</title>
-    <meta name="description" content="这是一个 index 页面">
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="/static/assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="/static/assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
-    <link rel="stylesheet" href="/static/assets/css/admin.css">
-    <link rel="stylesheet" href="/static/assets/css/app.css">
-    <script src="/static/assets/js/jquery.min.js"></script>
-    <script src="/static/assets/js/echarts.min.js"></script>
-    <script src="/static/assets/js/nunjuck.js"></script>
-    <script src="/static/assets/js/common.js"></script>
-
-    <style>
-        #page .layui-laypage input {
-            display: inline-block;
-            width: 40px;
-            margin: 0 10px;
-            padding: 0 3px;
-            text-align: center;
-        }
-    </style>
-</head>
+<#include "./include/admin/head.ftl">
+<style>
+    #page .layui-laypage input {
+        display: inline-block;
+        width: 40px;
+        margin: 0 10px;
+        padding: 0 3px;
+        text-align: center;
+    }
+</style>
 
 <body data-type="index">
 
@@ -95,10 +72,10 @@
 
                             <div class="am-u-sm-12 am-u-md-3">
                                 <div class="am-input-group am-input-group-sm">
-                                    <input type="text" class="am-form-field">
+                                    <input id="search_input" type="text" class="am-form-field">
                                     <span class="am-input-group-btn">
-            <button class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
-          </span>
+                                        <button id="search_button" class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +85,6 @@
                                     <table class="am-table am-table-striped am-table-hover table-main">
                                         <thead>
                                         <tr>
-                                            <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
                                             <th class="table-id">ID</th>
                                             <th class="table-title">标题</th>
                                             <th class="table-type">类别</th>
@@ -120,7 +96,6 @@
                                         <tbody id="article-tr">
                                         <#list articleList as article>
                                             <tr>
-                                                <td><input type="checkbox"></td>
                                                 <td>${article.id}</td>
                                                 <td><a href="/a/${article.id}">${article.title}</a></td>
                                                 <td>
@@ -134,7 +109,6 @@
                                                     <div class="am-btn-toolbar">
                                                         <div article_id="${article.id}" class="am-btn-group am-btn-group-xs">
                                                             <button type="button" class="am-btn am-btn-default am-btn-xs editor-article"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                            <button type="button" class="am-btn am-btn-default am-btn-xs copy-article"><span class="am-icon-copy"></span> 复制</button>
                                                             <button type="button" class="am-btn am-btn-default am-btn-xs delete-article"><span class="am-icon-trash-o"></span> 删除</button>
                                                         </div>
                                                     </div>
@@ -178,7 +152,7 @@
                          if(!first){
                              getdataAjax({
                                  methods:"POST",
-                                 url:"/admin/page/article/" + obj.curr + "?item="+$("#itemList").val(),
+                                 url:"/admin/page/article/" + obj.curr + "?item="+$("#itemList").val()+"&search=",
                                  context:this,
                                  success:function(param,res) {
                                      var data = res.data;
@@ -202,7 +176,7 @@
                  var item = $(this).val();
                  getdataAjax({
                      methods:"POST",
-                     url:"/admin/page/article/1?item="+item,
+                     url:"/admin/page/article/1?item="+item+"&search=",
                      context:this,
                      success:function(param,res) {
                          var data = res.data;
@@ -227,15 +201,69 @@
                      }
                  })
              })
+
+             $("#search_button").click(function(){
+                 var item = $("#itemList").val();
+                 var search = $("#search_input").val();
+                 getdataAjax({
+                     methods:"POST",
+                     url:"/admin/page/article/1?item="+item+"&search="+search,
+                     context:this,
+                     success:function(param,res) {
+                         var data = res.data;
+                         common.getTmp({
+                             html:"article1.html",
+                             data:{
+                                 msg:data
+                             },
+                             callback:function(err,res){
+                                 $("#article-tr").html(res);
+                             }
+                         });
+                     }
+                 })
+                 getdataAjax({
+                     methods:"POST",
+                     url:"/admin/page/article/count/"+item+"?search="+search,
+                     context:this,
+                     success:function(param,res) {
+                         var data = res.data;
+                         paging(data);
+                     }
+                 })
+             });
              $("body").on("click",".editor-article",function(){
                  var id = $(this).parent().attr("article_id");
                  window.location.href = "/admin/article/modify/" + id;
              })
              $("body").on("click",".copy-article",function(){
-                    layer.msg("aaa")
+
              })
              $("body").on("click",".delete-article",function(){
-
+                 _self = $(this)
+                 var id = $(this).parent().attr("article_id");
+                 layer.confirm('确定删除该条新闻？', {
+                     btn: ['取消','删除'] //按钮
+                 }, function(){
+                     layer.closeAll();
+                 }, function(){
+                     var load = layer.load(1, {
+                         shade: [0.1,'#fff'] //0.1透明度的白色背景
+                     });
+                     getdataAjax({
+                         methods:"POST",
+                         url:"/admin/article/delete/"+id,
+                         context:this,
+                         success:function(param,res) {
+                             layer.close(load);
+                             if(res.success == true){
+                                 _self.parents("tr").remove();
+                             }else{
+                                 //处理登录错误
+                             }
+                         }
+                     })
+                 });
              })
 
          });

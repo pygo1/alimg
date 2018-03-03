@@ -1,6 +1,6 @@
-<#include "include/head.ftl">
+<#include "include/web/head.ftl">
 <body>
-<#include "include/header.ftl">
+<#include "include/web/header.ftl">
 <div class="layui-container" style="margin-top: 10px;">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
@@ -10,7 +10,7 @@
                 </div>
                 <ul class="fly-list">
                 <#list articleList as article>
-                    <#include "include/articleItem.ftl">
+                    <#include "include/web/articleItem.ftl">
                 </#list>
                 </ul>
             </div>
@@ -24,7 +24,7 @@
                 </div>
                 <ul class="fly-list">
                 <#list articleList as article>
-                    <#include "include/articleItem.ftl">
+                    <#include "include/web/articleItem.ftl">
                 </#list>
                 </ul>
                 <div style="text-align: center">

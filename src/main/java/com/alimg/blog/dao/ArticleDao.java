@@ -13,13 +13,15 @@ public interface ArticleDao {
      * @param limit 查询条数
      * @return
      */
-    List<Article> queryAll(@Param("offset") int offset, @Param("limit") int limit,@Param("item") int item);
+    List<Article> queryAll(@Param("offset") int offset, @Param("limit") int limit,@Param("item") int item,@Param("search") String search);
 
     Article selectArticle(@Param("id") int id);
 
-    int selectArticleCount(@Param("item") int item);
+    int selectArticleCount(@Param("item") int item,@Param("search") String search);
 
     int insertArticle(@Param("article") Article article);
 
     int modifyArticle(@Param("article") Article article);
+
+    void deleteArticle(@Param("id") int id);
 }

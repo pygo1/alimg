@@ -1,6 +1,5 @@
 {% for article in msg %}
 <tr>
-    <td><input type="checkbox"></td>
     <td>{{article.id}}</td>
     <td><a href="/a/{{article.id}}">{{article.title}}</a></td>
     <td>
@@ -14,7 +13,6 @@
         <div class="am-btn-toolbar">
             <div article_id="{{article.id}}" class="am-btn-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary editor-article"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                <button type="button" class="am-btn am-btn-default am-btn-xs am-hide-sm-only copy-article"><span class="am-icon-copy"></span> 复制</button>
                 <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only delete-article"><span class="am-icon-trash-o"></span> 删除</button>
             </div>
         </div>
