@@ -14,18 +14,18 @@
         <ul class="layui-nav doob-nav">
         <#list itemList as list>
             <li class="layui-nav-item layui-hide-xs">
-                <a href="${list.name}">${list.name}</a>
+                <a href="/i/${list.name}">${list.name}</a>
                 <#if list.children >
                     <dl class="layui-nav-child" style="z-index: 999999">
                         <#list list.children as child>
-                            <dd><a href="${child.name}">${child.name}</a></dd>
+                            <dd><a href="/i/${child.name}">${child.name}</a></dd>
                         </#list>
                     </dl>
                 </#if>
             </li>
         </#list>
-            <li class="layui-nav-item">
-                <a href="">个人中心<span class="layui-badge-dot"></span></a>
+            <li class="layui-nav-item" style="float: right">
+                <a href="/admin">登录</a>
             </li>
         </ul>
     </div>

@@ -21,4 +21,14 @@ public class ItemServiceImpl implements ItemService {
         items = itemDao.getAllItem();
         return items;
     }
+
+    public List<Article> getArticle(Integer offset, int limit, String item) {
+        List<Article> articles = itemDao.selectArticleInItem(offset,limit,item);
+        return articles;
+    }
+
+    public int getCountbyItem(String item) {
+        int count = itemDao.selectArticleCountByItem(item);
+        return count;
+    }
 }

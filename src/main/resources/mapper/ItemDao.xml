@@ -4,6 +4,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alimg.blog.dao.ItemDao">
     <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap id="ArticleMapper" type="com.alimg.blog.entity.Article">
+        <id property="id" column="articleId"/>
+        <result property="authorId" column="authorId"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="createTime"/>
+        <result property="modifyTime" column="modifyTime"/>
+        <result property="publishTime" column="publishTime"/>
+        <result property="level" column="level"/>
+        <result property="click" column="click"/>
+        <result property="sort" column="sort"/>
+        <collection property="item" javaType="java.util.List" ofType="com.alimg.blog.entity.Item">
+            <id property="id" column="itemId"/>
+            <result property="name" column="itemName"/>
+            <result property="mark" column="itemMark"/>
+            <result property="createTime" column="itemCreateTime"/>
+        </collection>
+        <collection property="tag" javaType="java.util.List" ofType="com.alimg.blog.entity.Tag">
+            <id property="id" column="tagId"/>
+            <result property="name" column="tagName"/>
+            <result property="mark" column="tagMark"/>
+            <result property="info" column="tagInfo"/>
+            <result property="article_id" column="tagArticleId"/>
+        </collection>
+
+        <collection property="user" ofType="com.alimg.blog.entity.User">
+            <id property="id" column="userId"/>
+            <result property="name" column="userName"/>
+            <result property="info" column="userInfo"/>
+            <result property="img" column="userImg"/>
+            <result property="mark" column="userMark"/>
+        </collection>
+
+    </resultMap>
+
     <resultMap id="ItemMapper" type="com.alimg.blog.entity.Item">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
@@ -34,4 +69,52 @@
     <update id="modifyHasItem">
         <include refid="insert"/>
     </update>
+
+    <select id="selectArticleInItem" resultMap="ArticleMapper">
+        SELECT
+        a.id articleId,
+        a.authorId,
+        a.title,
+        a.content,
+        a.createTime,
+        a.modifyTime,
+        a.publishTime,
+        a.level,
+        a.click,
+        a.sort,
+        b.id itemId,
+        b.name itemName,
+        b.mark itemMark,
+        b.createTime itemCreateTime,
+        d.id tagId,
+        d.name tagName,
+        d.mark tagMark,
+        d.info tagInfo,
+        d.article_id tagArticleId,
+        e.id userId,
+        e.name userName,
+        e.info userInfo,
+        e.img userImg,
+        e.mark userMark
+        FROM
+        article a
+        LEFT JOIN article_has_item c  ON a.id = c.article_id
+        LEFT JOIN item b  ON b.id = c.item_id
+        LEFT JOIN tag d  ON a.id = d.article_id
+        LEFT JOIN user e  ON a.authorId = e.id
+        WHERE
+        a.id in (SELECT t.id FROM (SELECT temp.id FROM article temp
+        WHERE 1=1
+        <if test="item != '' ">
+            AND temp.id in(SELECT  m.article_id FROM (SELECT article_id FROM article_has_item WHERE item_id = (SELECT id FROM item WHERE name = #{item})) AS m)
+        </if>
+        ORDER BY temp.createTime DESC
+        LIMIT ${offset}, ${limit}) AS t)
+        ORDER BY
+        a.createTime DESC
+    </select>
+    <select id="selectArticleCountByItem" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT article_id ) FROM article_has_item WHERE item_id = (SELECT id FROM item WHERE name = #{item})
+    </select>
+
 </mapper>

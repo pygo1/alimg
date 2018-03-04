@@ -4,6 +4,24 @@
             async:true
         }
     });
+    moment.locale('en', {
+        relativeTime : {
+            future: "%s后",
+            past:   "%s前",
+            s:  "秒",
+            m:  "一分钟",
+            mm: "%d分钟",
+            h:  "一小时",
+            hh: "%d小时",
+            d:  "一天",
+            dd: "%d天",
+            M:  "一个月",
+            MM: "%d月",
+            y:  "一年",
+            yy: "%d年"
+        }
+    });
+
     function getTmp(opts){
         var self=this;
         var tmp = $.extend({}, opts);
@@ -50,13 +68,21 @@
     function delHtmlTag(str) {
         return  str.replace(/<[^>]+>/g,"").replace(/&nbsp;/g,"").replace(/&lt;/g,"").replace(/&lt;/g,"");//鍘绘帀鎵€鏈夌殑html鏍囪
     }
+    function prettyTime(data,item) {
+        for(var n = 0; n<data.length;n++){
+            for(var i = 0;i < item.length;i++){
+                data[n][item[i]] = moment(data[n][item[i]]).fromNow();
+            }
+        }
+    }
     global.common = {
         getQueryString: getQueryString,
         stringFormat: stringFormat,
         getTmp:getTmp,
         trackMouse:trackMouse,
         loading:loading,
-        delHtmlTag:delHtmlTag
+        delHtmlTag:delHtmlTag,
+        prettyTime:prettyTime
     };
 
 })(this)

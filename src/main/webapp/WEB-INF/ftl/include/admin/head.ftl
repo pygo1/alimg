@@ -22,6 +22,7 @@
     <script src="/static/assets/js/jquery.min.js"></script>
     <script src="/static/assets/js/echarts.min.js"></script>
     <script src="/static/assets/js/nunjuck.js"></script>
+    <script src="/static/js/moment.js"></script>
     <script src="/static/assets/js/common.js"></script>
 
 </head>

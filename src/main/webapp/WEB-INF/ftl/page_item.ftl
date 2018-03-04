@@ -1,7 +1,6 @@
 <#include "include/web/head.ftl">
 <body>
 <#include "include/web/header.ftl">
-
 <div class="layui-container" style="margin-top: 10px;">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
@@ -19,7 +18,7 @@
             <div class="fly-panel">
 
                 <div class="fly-panel-title fly-filter">
-                    <a href="/column/all/" class="layui-this">综合</a>
+                    <a href="/column/all/" class="layui-this">分类: ${item}</a>
                     <#--<span class="fly-mid"></span>-->
                     <#--<a href="/column/all/unsolved/">未结</a>-->
                 </div>
@@ -48,8 +47,6 @@
                     </li>
                 </ul>
             </div>
-            <#include "include/web/itemClould.ftl">
-
             <div class="fly-panel">
                 <h3 class="fly-panel-title">温馨通道</h3>
                 <ul class="layui-timeline">
@@ -96,10 +93,10 @@
 </div>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/static/js/ajax.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-
     layui.use(['element','layer','flow'], function(){
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
         var layer = layui.layer; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -116,7 +113,7 @@
             ,done: function(page, next){ //执行下一页的回调
                 getdataAjax({
                     methods:"POST",
-                    url:"/page/article/" + (page) + "?item=0&search=",
+                    url:"/page/item/${item}/" + (page),
                     context:this,
                     success:function(param,res) {
                         var data = res.data;

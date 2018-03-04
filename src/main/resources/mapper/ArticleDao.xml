@@ -147,7 +147,7 @@
         </if>
         AND temp.level = 1 ) AS t)
         ORDER BY
-        a.createTime
+        a.createTime DESC
     </select>
     <select id="queryAll" resultMap="ArticleMapper">
       SELECT
@@ -190,9 +190,10 @@
         <if test="search != '' ">
           AND temp.title LIKE '%' #{search} '%'
         </if>
+        ORDER BY temp.createTime DESC
         LIMIT ${offset}, ${limit}) AS t)
         ORDER BY
-        a.createTime
+        a.createTime DESC
     </select>
 
 </mapper>
