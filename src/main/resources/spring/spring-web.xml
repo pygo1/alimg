@@ -8,14 +8,43 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 	<!-- 配置SpringMVC -->
 	<!-- 1.开启SpringMVC注解模式 -->
 	<!-- 简化配置： 
 		(1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter 
 		(2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持 
 	-->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"
+				  id="fastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+				<!--<property name="serializerFeature">-->
+				<!--这个地方加上这个功能吧，能自己配置一些东西，比如时间的格式化，null输出""等等-->
+				<!--</property>-->
+				<property name="features">
+					<list>
+						<value>QuoteFieldNames</value> <!-- 输出key时是否使用双引号,默认为true -->
+						<value>WriteMapNullValue</value>  <!-- 是否输出值为null的字段,默认为false -->
+						<value>WriteDateUseDateFormat</value>
+						<!--
+                        <value>DisableCircularReferenceDetect</value>
+                        <value>WriteDateUseDateFormat</value>
+                        <value>WriteNullStringAsEmpty</value>  字符类型字段如果为null,输出为"",而非null
+                        <value>WriteNullNumberAsZero</value>  数值字段如果为null,输出为0,而非null
+                        <value>WriteNullBooleanAsFalse</value>  Boolean字段如果为null,输出为false,而非null
+                        <value>WriteNullListAsEmpty</value>    List字段如果为null,输出为[],而非null
+                        -->
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
 	<!-- 2.静态资源默认servlet配置
 		(1)加入对静态资源的处理：js,gif,png
@@ -80,6 +109,7 @@
 		<property name="defaultEncoding" value="utf-8"/>
 		<property name="maxUploadSize" value="1024000"/>
 	</bean>
+
 
 	<mvc:resources mapping="/static/**" location="/static/" />
 </beans>

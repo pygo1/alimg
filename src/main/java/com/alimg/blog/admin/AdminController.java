@@ -54,7 +54,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/article", method = RequestMethod.GET)
     private String article(Model model) {
         List<Article> articleList = articleService.getList(0,8,0,"");
-        System.out.println(articleList);
+
         int articleCount = articleService.getArticleCount(0,"");
 
         List<Item> items = itemService.getList();

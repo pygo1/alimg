@@ -193,7 +193,7 @@
                  })
                  getdataAjax({
                      methods:"POST",
-                     url:"/admin/page/article/count/"+item,
+                     url:"/admin/page/article/count/"+item+"?search=",
                      context:this,
                      success:function(param,res) {
                          var data = res.data;

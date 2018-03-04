@@ -1,7 +1,10 @@
 package com.alimg.blog.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 import java.util.List;
+
 
 public class Article {
 
@@ -12,11 +15,11 @@ public class Article {
     private String title;
 
     private String content;
-
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
-
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
-
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
 
     private String level;
@@ -32,6 +35,7 @@ public class Article {
     private User user;
 
     public Article() {
+
     }
 
     public Article(Integer id, Integer authorId, String title, String content, Date createTime, Date modifyTime, Date publishTime, String level, String click, String sort) {
@@ -82,7 +86,6 @@ public class Article {
     public Date getCreateTime() {
         return createTime;
     }
-
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
@@ -90,7 +93,6 @@ public class Article {
     public Date getModifyTime() {
         return modifyTime;
     }
-
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
@@ -98,7 +100,6 @@ public class Article {
     public Date getPublishTime() {
         return publishTime;
     }
-
     public void setPublishTime(Date publishTime) {
         this.publishTime = publishTime;
     }
