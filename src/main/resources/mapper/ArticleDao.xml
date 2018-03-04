@@ -107,6 +107,48 @@
             ) AS m
         </if>
     </select>
+    <select id="queryTop" resultMap="ArticleMapper">
+        SELECT
+        a.id articleId,
+        a.authorId,
+        a.title,
+        a.content,
+        a.createTime,
+        a.modifyTime,
+        a.publishTime,
+        a.level,
+        a.click,
+        a.sort,
+        b.id itemId,
+        b.name itemName,
+        b.mark itemMark,
+        b.createTime itemCreateTime,
+        d.id tagId,
+        d.name tagName,
+        d.mark tagMark,
+        d.info tagInfo,
+        d.article_id tagArticleId,
+        e.id userId,
+        e.name userName,
+        e.info userInfo,
+        e.img userImg,
+        e.mark userMark
+        FROM
+        article a
+        LEFT JOIN article_has_item c  ON a.id = c.article_id
+        LEFT JOIN item b  ON b.id = c.item_id
+        LEFT JOIN tag d  ON a.id = d.article_id
+        LEFT JOIN user e  ON a.authorId = e.id
+        WHERE
+        a.id in (SELECT t.id FROM (SELECT temp.id FROM article temp
+        WHERE 1=1
+        <if test="item != 0">
+            AND temp.id in(SELECT  m.article_id FROM (SELECT article_id FROM article_has_item WHERE item_id = #{item}) AS m)
+        </if>
+        AND temp.level = 1 ) AS t)
+        ORDER BY
+        a.createTime
+    </select>
     <select id="queryAll" resultMap="ArticleMapper">
       SELECT
         a.id articleId,

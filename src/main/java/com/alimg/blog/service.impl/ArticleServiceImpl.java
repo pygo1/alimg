@@ -29,6 +29,12 @@ public class ArticleServiceImpl implements ArticleService {
         return articles;
     }
 
+    public List<Article> getTopList(int item) {
+        List<Article> articles;
+        articles = articleDao.queryTop(item);
+        return articles;
+    }
+
     public Article getArticle(Integer id) {
         Article article = articleDao.selectArticle(id);
         return article;

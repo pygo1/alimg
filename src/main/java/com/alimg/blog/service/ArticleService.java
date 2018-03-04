@@ -12,6 +12,8 @@ public interface ArticleService {
      */
     List<Article> getList(Integer offset, int limit,int item ,String search);
 
+    List<Article> getTopList(int item);
+
     Article getArticle(Integer id);
 
     int getArticleCount(int item,String search);

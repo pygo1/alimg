@@ -14,6 +14,7 @@ public interface ArticleDao {
      * @return
      */
     List<Article> queryAll(@Param("offset") int offset, @Param("limit") int limit,@Param("item") int item,@Param("search") String search);
+    List<Article> queryTop(@Param("item") int item);
 
     Article selectArticle(@Param("id") int id);
 

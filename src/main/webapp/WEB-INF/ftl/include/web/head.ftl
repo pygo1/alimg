@@ -10,4 +10,6 @@
     <link rel="stylesheet" href="/static/css/global.css" media="all">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script src="/static/assets/js/nunjuck.js"></script>
+    <script src="/static/assets/js/common.js"></script>
 </head>
