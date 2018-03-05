@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <script src="/static/js/jquery.dotdotdot.js"></script>
     <script src="/static/assets/js/nunjuck.js"></script>
     <script src="/static/js/moment.js"></script>
     <script src="/static/assets/js/common.js"></script>

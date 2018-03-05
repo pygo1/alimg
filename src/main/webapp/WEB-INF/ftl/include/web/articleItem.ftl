@@ -2,15 +2,15 @@
     <a href="/u/${article.authorId}" class="fly-avatar"> <img src="${article.user.img}" alt="${article.user.name}"> </a>
     <h2>
     <#list article.item as item>
-        <a class="layui-badge layui-badge-blue" href="/i/${item.name}">
+        <a style="margin-right: 0;" class="layui-badge layui-badge-blue" href="/i/${item.name}">
         ${item.name}
-        </a>
+        </a><span style="display:inline-block;width: 5px;">x</span>
     </#list>
 
     <#list article.tag as tag>
-        <a class="layui-badge" href="/t/${tag.name}">
+        <a style="margin-right: 0;" class="layui-badge" href="/t/${tag.name}">
         ${tag.name}
-        </a>
+        </a><span style="display:inline-block;width: 5px;">x</span>
     </#list>
         <a href="/a/${article.id}">${article.title}</a> </h2>
     <div class="fly-list-info">
