@@ -25,7 +25,7 @@
             </li>
         </#list>
             <li class="layui-nav-item" style="float: right">
-                <a href="/admin">登录</a>
+                <a target="_blank" href="/admin">登录</a>
             </li>
         </ul>
     </div>

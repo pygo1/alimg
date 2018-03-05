@@ -8,7 +8,7 @@
         relativeTime : {
             future: "%s后",
             past:   "%s前",
-            s:  "秒",
+            s:  "%d秒",
             m:  "一分钟",
             mm: "%d分钟",
             h:  "一小时",

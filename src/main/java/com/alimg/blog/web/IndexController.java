@@ -37,6 +37,9 @@ public class IndexController extends BaseController {
         User user = (User)req.getSession().getAttribute("user");
 
         List<TagCloudExecution> tags = tagService.getTagCloud();
+
+        List<Article> notice = articleService.getList(0,3,8,"");
+
         //System.out.println(tags);
         model.addAttribute("itemList", items);
         //model.addAttribute("articleList", list);
@@ -47,6 +50,9 @@ public class IndexController extends BaseController {
         model.addAttribute("tagsCloud", tags);
 
         model.addAttribute("articleCount", articleCount);
+
+        model.addAttribute("notice", notice);
+
         return "index";
     }
 

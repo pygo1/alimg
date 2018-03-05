@@ -65,7 +65,7 @@
                                     <div class="am-form-group">
                                         <label for="user-email" class="am-u-sm-3 am-form-label">栏目 / Item</label>
                                         <div class="am-u-sm-9">
-                                            <select multiple data-am-selected="{btnSize: 'sm',btnWidth:'100%'}" id="article-item">
+                                            <select style="z-index: 9999" multiple data-am-selected="{btnSize: 'sm',btnWidth:'100%'}" id="article-item">
                                                 <#list itemList as list>
                                                     <option value="${list.id}">${list.name}</option>
                                                         <#if list.children >
@@ -103,9 +103,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <script id="editor" type="text/plain" style="width:100%;height:500px;"/>
                 </div>
-                <script id="editor" type="text/plain" style="width:100%;height:500px;"/>
             </div>
         </div>
         <script src="/static/layui/layui.js" charset="utf-8"></script>

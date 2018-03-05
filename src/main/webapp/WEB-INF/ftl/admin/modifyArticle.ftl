@@ -105,10 +105,9 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div style="width:100%; margin:auto">
-                    <textarea style="width:100%;height:500px;" id="editor">${article.content}</textarea>
+                    <div style="width:100%; margin:auto">
+                        <textarea style="width:100%;height:500px;" id="editor">${article.content}</textarea>
+                    </div>
                 </div>
                 <#--<script id="editor" type="text/plain" style="width:100%;"/>-->
             </div>

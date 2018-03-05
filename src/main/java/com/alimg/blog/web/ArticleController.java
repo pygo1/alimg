@@ -32,10 +32,13 @@ public class ArticleController extends BaseController {
 
         List<TagCloudExecution> tags = tagService.getTagCloud();
 
+        List<Article> notice = articleService.getList(0,3,8,"");
+
         model.addAttribute("itemList", items);
         model.addAttribute("article", article);
         model.addAttribute("articleTopList", topList);
         model.addAttribute("tagsCloud", tags);
+        model.addAttribute("notice", notice);
 
         return "article";
     }
