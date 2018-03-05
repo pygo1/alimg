@@ -195,5 +195,7 @@
         ORDER BY
         a.createTime DESC
     </select>
-
+    <update id="updateArticleClick">
+        UPDATE article set click = (click+1) WHERE id = #{id}
+    </update>
 </mapper>

@@ -90,4 +90,8 @@ public class ArticleServiceImpl implements ArticleService {
             throw new NoUserException(e.getMessage());
         }
     }
+
+    public void updateArticleClick(int id) {
+        articleDao.updateArticleClick(id);
+    }
 }

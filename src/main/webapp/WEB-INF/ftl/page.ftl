@@ -22,7 +22,7 @@
                     <#--<span class="fly-mid"></span>-->
                     <#--<a href="/column/all/unsolved/">未结</a>-->
                 </div>
-                <ul class="fly-list flow-default" id="list-content" style="overflow-y: scroll;height:400px;">
+                <ul class="fly-list flow-default" id="list-content" style="overflow-y: scroll;height:550px;">
                 <#--<#list articleList as article>-->
                     <#--<#include "include/web/articleItem.ftl">-->
                 <#--</#list>-->
@@ -81,7 +81,7 @@
 
 <div class="fly-footer">
     <p><a href="http://fly.layui.com/">Alimg</a> 2018 © <a href="http://www.alimg.com/">alimg.com</a></p>
-    <p class="fly-union"> <span>Power by</span> <a href="http://www.layui.com/" target="_blank"><img src="./static/img/logo.png" width="66px"></a>  </p>
+    <p class="fly-union"> <span>Power by</span> <a href="http://www.layui.com/" target="_blank"><img src="/static/img/logo.png" width="66px"></a>  </p>
 </div>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>

@@ -34,6 +34,8 @@ public class ArticleController extends BaseController {
 
         List<Article> notice = articleService.getList(0,3,8,"");
 
+        articleService.updateArticleClick(id);
+
         model.addAttribute("itemList", items);
         model.addAttribute("article", article);
         model.addAttribute("articleTopList", topList);

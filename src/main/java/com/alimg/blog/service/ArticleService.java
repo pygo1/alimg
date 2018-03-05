@@ -23,4 +23,6 @@ public interface ArticleService {
     Article modifyArticle(Article article,String[] item,String[] tags);
 
     void deleteArticle(int id);
+
+    void updateArticleClick(int id);
 }

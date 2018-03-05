@@ -25,4 +25,6 @@ public interface ArticleDao {
     int modifyArticle(@Param("article") Article article);
 
     void deleteArticle(@Param("id") int id);
+
+    void updateArticleClick(@Param("id") int id);
 }
