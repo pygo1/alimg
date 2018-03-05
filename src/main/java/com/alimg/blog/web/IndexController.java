@@ -1,6 +1,7 @@
 package com.alimg.blog.web;
 
 import com.alimg.blog.dto.Result;
+import com.alimg.blog.dto.TagCloudExecution;
 import com.alimg.blog.entity.Article;
 import com.alimg.blog.entity.Item;
 import com.alimg.blog.entity.User;
@@ -35,9 +36,15 @@ public class IndexController extends BaseController {
 
         User user = (User)req.getSession().getAttribute("user");
 
+        List<TagCloudExecution> tags = tagService.getTagCloud();
+        //System.out.println(tags);
         model.addAttribute("itemList", items);
         //model.addAttribute("articleList", list);
         model.addAttribute("articleTopList", topList);
+
+        model.addAttribute("articleTopList", topList);
+
+        model.addAttribute("tagsCloud", tags);
 
         model.addAttribute("articleCount", articleCount);
         return "index";

@@ -2,6 +2,7 @@ package com.alimg.blog.service.impl;
 
 import com.alimg.blog.dao.ItemDao;
 import com.alimg.blog.dao.TagDao;
+import com.alimg.blog.dto.TagCloudExecution;
 import com.alimg.blog.entity.Article;
 import com.alimg.blog.entity.Item;
 import com.alimg.blog.entity.Tag;
@@ -32,4 +33,10 @@ public class TagServiceImpl implements TagService {
         int count = tagDao.selectArticleCountByTag(tag);
         return count;
     }
+
+    public List<TagCloudExecution> getTagCloud() {
+        List<TagCloudExecution> tags = tagDao.selectTagCloud();
+        return tags;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.alimg.blog.service;
 
+import com.alimg.blog.dto.TagCloudExecution;
 import com.alimg.blog.entity.Article;
 import com.alimg.blog.entity.Tag;
 
@@ -16,4 +17,7 @@ public interface TagService {
     List<Article> getArticle(Integer offset, int limit,String tag);
 
     int getCountbyTag(String tag);
+
+    List<TagCloudExecution> getTagCloud();
+
 }

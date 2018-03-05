@@ -1,6 +1,7 @@
 package com.alimg.blog.web;
 
 import com.alimg.blog.dto.Result;
+import com.alimg.blog.dto.TagCloudExecution;
 import com.alimg.blog.entity.Article;
 import com.alimg.blog.entity.Item;
 import com.alimg.blog.service.ArticleService;
@@ -24,6 +25,8 @@ public class ItemController extends BaseController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private TagService tagService;
 
     @RequestMapping(value = "/i/{item}", method = RequestMethod.GET)
     private String article(@PathVariable("item") String item,Model model) {
@@ -32,11 +35,16 @@ public class ItemController extends BaseController {
         List<Item> items = itemService.getList();
 
         int articleCount = itemService.getCountbyItem(item);
+
+        List<TagCloudExecution> tags = tagService.getTagCloud();
+
         model.addAttribute("itemList", items);
         model.addAttribute("item", item);
         model.addAttribute("articleTopList", topList);
 
         model.addAttribute("articleCount", articleCount);
+
+        model.addAttribute("tagsCloud", tags);
 
         return "page_item";
     }

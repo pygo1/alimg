@@ -47,6 +47,7 @@
                     </li>
                 </ul>
             </div>
+            <#include "include/web/itemCloud.ftl">
             <div class="fly-panel">
                 <h3 class="fly-panel-title">温馨通道</h3>
                 <ul class="layui-timeline">
@@ -93,7 +94,6 @@
 </div>
 
 <script src="/static/layui/layui.js" charset="utf-8"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/static/js/ajax.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>

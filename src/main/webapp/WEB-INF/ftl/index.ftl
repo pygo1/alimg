@@ -48,7 +48,7 @@
                     </li>
                 </ul>
             </div>
-            <#include "include/web/itemClould.ftl">
+            <#include "include/web/itemCloud.ftl">
 
             <div class="fly-panel">
                 <h3 class="fly-panel-title">温馨通道</h3>

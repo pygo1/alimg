@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alimg.blog.dao.TagDao">
+    <resultMap id="TagCloud" type="com.alimg.blog.dto.TagCloudExecution">
+        <result property="count" column="count"/>
+        <result property="name" column="name"/>
+    </resultMap>
     <resultMap id="ArticleMapper" type="com.alimg.blog.entity.Article">
         <id property="id" column="articleId"/>
         <result property="authorId" column="authorId"/>
@@ -35,7 +39,6 @@
             <result property="img" column="userImg"/>
             <result property="mark" column="userMark"/>
         </collection>
-
     </resultMap>
 
     <sql id="insert">
@@ -100,5 +103,8 @@
     </select>
     <select id="selectArticleCountByTag" resultType="java.lang.Integer">
         SELECT COUNT(DISTINCT article_id ) FROM tag WHERE name = #{tag}
+    </select>
+    <select id="selectTagCloud" resultMap="TagCloud">
+        SELECT name,COUNT(name) count FROM tag GROUP BY name
     </select>
 </mapper>
