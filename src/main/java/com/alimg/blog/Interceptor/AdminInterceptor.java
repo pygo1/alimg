@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class AdminInterceptor implements HandlerInterceptor {
 
-
+    //对admin路由验证是否登录
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String url = httpServletRequest.getRequestURL().toString();
         if( !Pattern.matches(".*/admin(/.*)?",url)){

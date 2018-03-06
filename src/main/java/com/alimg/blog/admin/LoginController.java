@@ -19,22 +19,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value = "/login")
 public class LoginController extends BaseController {
-    @Autowired
-    private ArticleService articleService;
 
     @Autowired
     private UserService UserService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     private String login() {
-
         return "admin/login";
     }
 
     @RequestMapping(value = "/checkUser", method = RequestMethod.POST,produces = {
             "application/json; charset=utf-8" })
     @ResponseBody
-
     private Result<LoginExecution> checkUser(@RequestParam("email") String email, @RequestParam("password") String password,HttpSession httpSession) {
         if (email == null || email.equals("")){
             return new Result<LoginExecution>(false,"用户名不能为空");
@@ -42,7 +38,6 @@ public class LoginController extends BaseController {
             return new Result<LoginExecution>(false,"密码不能为空");
         }
         LoginExecution LoginExecution = null;
-
         try {
             LoginExecution = UserService.checkUser(email,password);
             httpSession.setAttribute("user", LoginExecution.getUser());

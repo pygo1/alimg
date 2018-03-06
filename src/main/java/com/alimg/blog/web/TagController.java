@@ -28,7 +28,6 @@ public class TagController extends BaseController {
 
         List<Item> items = itemService.getList();
 
-        //List<Article> articles = tagService.getArticle(0,8,tag);
         int articleCount = tagService.getCountbyTag(tag);
 
         List<TagCloudExecution> tags = tagService.getTagCloud();
@@ -39,9 +38,7 @@ public class TagController extends BaseController {
         model.addAttribute("itemList", items);
         model.addAttribute("tag", tag);
         model.addAttribute("articleTopList", topList);
-
         model.addAttribute("articleCount", articleCount);
-
         model.addAttribute("tagsCloud", tags);
         model.addAttribute("notice", notice);
 

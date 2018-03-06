@@ -26,7 +26,6 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     private String list(HttpServletRequest req,Model model) {
-        //List<Article> list = articleService.getList(0,8,0,"");
 
         List<Article> topList = articleService.getTopList(0);
 
@@ -40,9 +39,8 @@ public class IndexController extends BaseController {
 
         List<Article> notice = articleService.getList(0,3,8,"");
 
-        //System.out.println(tags);
         model.addAttribute("itemList", items);
-        //model.addAttribute("articleList", list);
+
         model.addAttribute("articleTopList", topList);
 
         model.addAttribute("articleTopList", topList);

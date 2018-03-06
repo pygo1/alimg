@@ -1,7 +1,7 @@
 package com.alimg.blog.exception;
 
 /**
- * 库存不足异常
+ * 登录异常
  */
 public class LoginException extends RuntimeException {
 

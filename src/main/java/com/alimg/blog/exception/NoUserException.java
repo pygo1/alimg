@@ -1,7 +1,7 @@
 package com.alimg.blog.exception;
 
 /**
- * 登录异常
+ * 用户异常
  */
 public class NoUserException extends RuntimeException {
 

@@ -43,9 +43,7 @@ public class ItemController extends BaseController {
         model.addAttribute("itemList", items);
         model.addAttribute("item", item);
         model.addAttribute("articleTopList", topList);
-
         model.addAttribute("articleCount", articleCount);
-
         model.addAttribute("tagsCloud", tags);
         model.addAttribute("notice", notice);
 

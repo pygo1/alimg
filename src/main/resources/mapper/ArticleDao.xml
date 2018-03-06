@@ -40,8 +40,8 @@
     </resultMap>
 
     <insert id="insertArticle">
-        INSERT ignore INTO Article(title, content,createTime,level,authorId)
-        VALUES (#{article.title}, #{article.content},#{article.createTime},#{article.level},#{article.authorId})
+        INSERT INTO article(title, content,createTime,level,authorId)
+        VALUES (#{article.title},#{article.content},#{article.createTime},#{article.level},#{article.authorId})
         <selectKey resultType="Integer" keyProperty="article.id" order="AFTER">
             SELECT @@IDENTITY
         </selectKey>

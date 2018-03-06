@@ -79,7 +79,6 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticle(int id) {
         try {
 
-
             itemDao.deleteItem(id);
 
             tagDao.deleteTag(id);
